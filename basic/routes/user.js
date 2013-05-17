@@ -22,8 +22,9 @@ exports.show= function(req, res){
   console.log(req.params.id);
   User.find(req.params.id)
   .success(function(user){
+    if(!user) return res.send(404);
     console.log('found user!');
-    res.render('show', {user: user});
+    return res.render('show', {user: user});
   })
   .error(function(err){
     res.send(404, err);
@@ -39,7 +40,7 @@ exports.create= function(req, res){
   .success(function(data){
     console.log("user saved with id: " + data.id);
     //Render a show template, pass it the users saved data
-    res.render('show', {user : data});
+    res.redirect('/user/'+ data.id);
   })
   .error(function(error){
     console.log("Error", error);
@@ -50,6 +51,18 @@ exports.create= function(req, res){
 exports.update= function(req, res){
   res.send("respond with a resource");
 };
-exports.remove= function(req, res){
-  res.send("respond with a resource");
+exports.remove = function(req, res){
+  console.log(req.params.id);
+  User.find(req.params.id)
+  .success(function(user){
+    if(!user) return res.send(404);
+    console.log('found user!');
+    user.destroy()
+    .success(function(){
+      res.json({message: 'User deleted successfully'});
+    });
+  })
+  .error(function(err){
+    res.send(404, err);
+  });
 };
