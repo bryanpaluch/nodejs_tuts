@@ -1,0 +1,13 @@
+extends layout
+block content
+  h1 Create User
+  form( method="post")#account-form
+    | name:
+    input#name(type='text', name='name', value='')
+    br
+    | email: 
+    input#email(type='text', name='email', value='')
+    br
+    | pin: 
+    input#pinCode(type='text', name='pin', value='')
+    button(type='submit') Create

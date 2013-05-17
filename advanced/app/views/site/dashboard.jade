@@ -1,0 +1,55 @@
+extends ../layouts/default
+
+block main
+  .container-fluid.fill
+    #dashboard-menu.row.span3.fill.colorin
+      ul.nav.nav-list
+        li.nav-header Conference Users
+    #dashboard-main.row.span7.fill.colorin
+      .row
+        #spinner-area.span2.offset2.center
+          .row
+            #status-area.span2.center conn
+    #dashboard-phone.row.span3.colorin
+      ul.nav.nav-list
+        li.nav-header Call In Info
+        li Conference Number
+          li #{conference.number}
+        li Conference Code
+          li ##{conference.code}
+        #dashboard-phone-status
+          li
+            a.webrtc(href="#connectwebrtc", id="webrtcbutton") Connect with WebRTC!
+          li
+            a.c2c(href="#clicktocall", id="c2cbutton") Have us call you
+    #webrtc-phone.row.span3.colorin.hide
+
+  #clicktocall.modal.hide.fade(tabindex="-1", role="dialog")
+    .modal-header
+      button.close(type='button', 'data-dismiss'='modal', 'aria-hidden'='true') x
+      h3 Have us call you
+    .modal-body
+      Please input your phone number and name and we will call you.
+      br 
+      br
+      label.control-label(for="phoneNumber") Phone Number:
+        input(type="text", name="phoneNumber", id="phoneNumber")
+      label.control-label(for="Name") Name:
+        input(type="text", name="name", id="name")
+    .modal-footer
+      button.dismiss.modalformbutton.btn('data-dismiss'='modal', type='submit') Close
+      button.modalformbutton.btn.submit.btn-primary(type='submit') Call
+  #connectwebrtc.modal.hide.fade(tabindex="-1", role="dialog")
+    .modal-header
+      button.close(type='button', 'data-dismiss'='modal', 'aria-hidden'='true') x
+      h3 WebRTC Beta
+    .modal-body
+      If you are using the Chrome browser we should be able to connect you using WebRTC
+    .modal-footer
+      button.dismiss.modalformbutton.btn('data-dismiss'='modal', type='submit') Close
+      button.modalformbutton.submit.btn.btn-primary(type='submit') Connect
+  #audioholder.hide
+
+block extrajs
+  script(src='/js/libs/require.js', data-main='/js/app.js')
+  script#conferenceData(type="text/json")!=JSON.stringify(conferenceData)

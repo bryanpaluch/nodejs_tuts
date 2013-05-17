@@ -1,0 +1,57 @@
+extends ../layouts/default
+
+block main
+  .container-fluid
+    .span2
+    .span10.boxed
+      p Email: #{user.email}
+      p Name: #{user.name}
+      if conference
+        h3 Conference: 1 #{conference.number}
+        p code: #{conference.code}
+        p pin: #{conference.pin}
+        button.btn.pull-right(href="#updateconference", 'data-toggle'='modal') update
+      else
+        button.btn.pull-right(href="#createconference", 'data-toggle'='modal') create
+    if conference
+      #updateconference.modal.hide.fade(tabindex="-1", role="dialog")
+        form#editconference.form-inline(action="/site/user/#{user._id}/conference", method="post")
+          .modal-header
+            button.close(type="button", 'data-dismiss'='modal', 'aria-hidden'='true') x
+            h3 Update Conference
+          .modal-body
+            p Update your current Conference Code and Pin, we will see if the number is available
+            .control-group
+              label.control-label(for='number') Code:
+                .controls
+                  input#number(type='text', name='code', value='#{conference.code}')
+            .control-group
+              label.control-label(for='number') Pin:
+                .controls
+                  input#pin(type='text', name='pin', value='#{conference.pin}')
+          .modal-footer
+            button.btn('data-dismiss'='modal', type='submit') Close
+            button.btn.btn-primary(type='submit') Update
+    else 
+      #createconference.modal.hide.fade(tabindex="-1", role="dialog")
+        form#editconference.form-inline(action="/site/user/#{user._id}/conference", method="post")
+          .modal-header
+            button.close(type="button", 'data-dismiss'='modal', 'aria-hidden'='true') x
+            h3 Create Conference
+          .modal-body
+            p Create a conference with a Number Code and Pin of your choosing, we will see if the number is available
+            .control-group
+              p Number:1 860 581 8926
+              input#number(type="hidden", name="number", value="8565134019")
+              label.control-label(for='code') Code:
+                .controls
+                  input#code(type='text', name='code', value='')
+            .control-group
+              label.control-label(for='number') Pin:
+                .controls
+                  input#pin(type='text', name='pin', value='')
+          .modal-footer
+            button.btn('data-dismiss'='modal', type='submit') Close
+            button.btn.btn-primary(type='submit') Create 
+
+

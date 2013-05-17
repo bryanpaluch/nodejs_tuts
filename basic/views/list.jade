@@ -1,0 +1,9 @@
+extends layout
+block content
+  h1 List Users
+  ul
+    each user in users
+      li 
+        a(href="/user/#{user.id}") name: #{user.name} 
+      
+

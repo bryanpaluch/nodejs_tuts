@@ -1,0 +1,13 @@
+if(conference.phonestate === 'default')
+  li
+    a.webrtc(href="#connectwebrtc", id="webrtcbutton") Connect with WebRTC!
+  li
+    a.c2c(href="#clicktocall", id="c2cbutton") Have us call you
+else if(conference.phonestate === 'webrtc')
+  li
+    #{conference.webrtcState}
+    a.webrtc(href="#connectwebrtc", id="webrtcbutton") Options
+else if(conference.phonestate === 'c2c')
+  li
+    #{conference.c2cState}
+    a.c2c(href="#clicktocall", id="c2cbutton") Options
